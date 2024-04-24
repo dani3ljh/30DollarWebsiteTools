@@ -1,15 +1,12 @@
 import sys
 from reassign import reassign
-from pynput import keyboard
+from pynput.keyboard import Controller, Listener
 import mouseBot
 import json
 import pyautogui
 
 def on_press(key):
-    mouseBot.on_press(key, data)
-
-def on_release(key):
-    mouseBot.on_release(key, data)
+    mouseBot.on_press(key, data, controller)
 
 if __name__ == "__main__":
     args = sys.argv[1:]
@@ -17,14 +14,14 @@ if __name__ == "__main__":
     if len(args) == 0:
         raise Exception("No arguments provided")
 
-    if args[0] == "reassign":
+    if args[0].lower() == "reassign":
         if len(args) == 1:
             raise Exception("Input file path argument not provided")
         if len(args) == 2:
             reassign(args[1])
         else:
             reassign(args[1], args[2])
-    elif args[0] == "mouseBot":
+    elif args[0].lower() == "mousebot":
         if len(args) == 1:
             raise Exception("Key To Coordinates json file path argument not provided")
 
@@ -32,11 +29,13 @@ if __name__ == "__main__":
         data = json.load(f)
         f.close
 
+        controller = Controller()
+
         pyautogui.FAILSAFE = False
 
-        with keyboard.Listener(
+        with Listener(
                 on_press=on_press,
-                on_release=on_release) as listener:
+                on_release=mouseBot.on_release) as listener:
             listener.join()
     else:
         raise Exception("Tool not selected")
