@@ -3,5 +3,10 @@
     "c": {"x": 850, "y": 550, "clickCenter": false},
     "p": {"x": 770, "y": 470, "clickCenter": true},
     "t": {"x": 630, "y": 470, "clickCenter": true},
-    "f": {"x": 770, "y": 630, "clickCenter": false}
+    "f": {"x": 770, "y": 630, "clickCenter": false},
+    "xStep": 81,
+    "yStep": 81,
+    "minX": 60,
+    "maxX": 860,
+    "columns": 10
 }
