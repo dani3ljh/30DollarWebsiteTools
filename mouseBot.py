@@ -38,14 +38,26 @@ def on_press(key, data, controller: Controller):
         pyautogui.moveTo(info["x"], info["y"])
         pyautogui.click()
 
-        if info["clickCenter"]:
-            pyautogui.click(450, 620)
-            controller.press(Key.ctrl)
+        if not info["clickCenter"]:
+            pyautogui.moveTo(originalPos)
+            continue
+        
+        pyautogui.click(450, 620)
+        with controller.pressed(Key.ctrl):
             controller.press('a')
             controller.release('a')
-            controller.release(Key.ctrl)
-        else:
-            pyautogui.moveTo(originalPos)
+        
+        if not "value" in info:
+            print(f"doesnt contain value key: {info}")
+            continue
+
+        controller.press(Key.backspace)
+        controller.release(Key.backspace)
+        controller.type(info["value"])
+        clickPos = data[info["type"]]
+        pyautogui.moveTo(clickPos["x"], clickPos["y"])
+        pyautogui.click()
+        pyautogui.moveTo(originalPos)
     
 def on_release(key):
     if key == Key.esc or key == Key.delete:
