@@ -1,4 +1,5 @@
 {
+    "_comment": "these coordinates are based of if your window was half of a 1920x1080 screen with 75% zoom",
     "c": {"x": 850, "y": 550, "clickCenter": false},
     "p": {"x": 770, "y": 470, "clickCenter": true},
     "t": {"x": 630, "y": 470, "clickCenter": true},
