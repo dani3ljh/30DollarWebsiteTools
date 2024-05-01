@@ -1,9 +1,10 @@
 import sys
-from reassign import reassign
-from pynput.keyboard import Controller, Listener
-import mouseBot
 import json
 import pyautogui
+from pynput.keyboard import Controller, Listener
+from reassign import reassign
+from combine import combine
+import mouseBot
 
 def on_press(key):
     mouseBot.on_press(key, data, controller)
@@ -37,5 +38,9 @@ if __name__ == "__main__":
                 on_press=on_press,
                 on_release=mouseBot.on_release) as listener:
             listener.join()
+    elif args[0].lower() == "combine":
+        if len(args) == 1:
+            raise Exception("Input file path argumnts not provided")
+        combine(args[1:])
     else:
         raise Exception("Tool not selected")
