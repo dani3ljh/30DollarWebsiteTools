@@ -1,7 +1,7 @@
 from pynput.keyboard import Key, Controller
 import pyautogui
 
-def on_press(key, data, controller: Controller):
+def on_press(key: Key, data: dict, controller: Controller, useKeybinds = True, useMacros = True):
     if key == Key.left:
         posX = pyautogui.position()[0]
         if posX > data["minX"] and posX > data["maxX"]:
@@ -27,12 +27,16 @@ def on_press(key, data, controller: Controller):
     if not hasattr(key, "char"):
         return
 
-    for dataKey in data:
-        if key.char != dataKey:
-            continue
+    for dataKey in data["keys"]:
+        info = data["keys"][dataKey]
 
-        info = data[dataKey]
+        if (key.char != dataKey or
+            (not useKeybinds and info["type"] == "keybind") or
+            (not useMacros   and info["type"] == "macro")):
+                continue
+
         print(f"command {key.char} detected clicking at ({info['x']}, {info['y']})")
+
         originalPos = pyautogui.position()
 
         pyautogui.moveTo(info["x"], info["y"])
@@ -48,13 +52,12 @@ def on_press(key, data, controller: Controller):
             controller.release('a')
         
         if not "value" in info:
-            print(f"doesnt contain value key: {info}")
             continue
 
         controller.press(Key.backspace)
         controller.release(Key.backspace)
         controller.type(info["value"])
-        clickPos = data[info["type"]]
+        clickPos = data[info["clickAt"]]
         pyautogui.moveTo(clickPos["x"], clickPos["y"])
         pyautogui.click()
         pyautogui.moveTo(originalPos)

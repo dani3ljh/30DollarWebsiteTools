@@ -7,7 +7,13 @@ from combine import combine
 import mouseBot
 
 def on_press(key):
-    mouseBot.on_press(key, data, controller)
+    mouseBot.on_press(
+        key,
+        data,
+        controller,
+        True if useKeybinds is None else useKeybinds,
+        True if useMacros is None else useMacros
+    )
 
 if __name__ == "__main__":
     args = sys.argv[1:]
@@ -24,13 +30,16 @@ if __name__ == "__main__":
             reassign(args[1], args[2])
     elif args[0].lower() == "mousebot":
         if len(args) == 1:
-            raise Exception("Key To Coordinates json file path argument not provided")
+            raise Exception("Data json file path argument not provided")
 
         f = open(args[1])
         data = json.load(f)
         f.close
 
         controller = Controller()
+
+        useKeybinds = args[2].lower() == "true" if len(args) > 2 else None
+        useMacros   = args[3].lower() == "true" if len(args) > 3 else None
 
         pyautogui.FAILSAFE = False
 
@@ -39,7 +48,7 @@ if __name__ == "__main__":
                 on_release=mouseBot.on_release) as listener:
             listener.join()
     elif args[0].lower() == "combine":
-        if len(args) == 1:
+        if len(args) < 2:
             raise Exception("Input file path argumnts not provided")
         combine(args[1:])
     else:
