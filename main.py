@@ -11,8 +11,8 @@ def on_press(key):
         key,
         data,
         controller,
-        True if useKeybinds is None else useKeybinds,
-        True if useMacros is None else useMacros
+        useKeybinds,
+        useMacros
     )
 
 if __name__ == "__main__":
@@ -38,8 +38,8 @@ if __name__ == "__main__":
 
         controller = Controller()
 
-        useKeybinds = args[2].lower() == "true" if len(args) > 2 else None
-        useMacros   = args[3].lower() == "true" if len(args) > 3 else None
+        useKeybinds = args[2].lower() == "true" if len(args) > 2 else True
+        useMacros   = args[3].lower() == "true" if len(args) > 3 else True
 
         pyautogui.FAILSAFE = False
 
