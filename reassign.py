@@ -7,8 +7,7 @@ def reassign(inputFilePath, outputFilePath = "output.🗿"):
     originalSound = input("Original Sound: ")
     if not originalSound: return
 
-    newSound = input("New Sound: ")
-    if not newSound: return
+    newSound = input("New Sound: ") or originalSound
 
     transposition = input("Transposition: ") or "0"
     transposition = int(transposition)
@@ -31,10 +30,15 @@ def reassign(inputFilePath, outputFilePath = "output.🗿"):
             f.write(resSound[:-1]) #remove last @
         
         for sound in sounds:
+            sound = sound.strip()
+
             if sound == "": 
                 continue
+            
+            if sound == "!divider":
+                f.write("|!divider\n")
 
-            components = sound.strip().split("@")
+            components = sound.split("@")
 
             if components[0] != originalSound:
                 writeComponents(components)

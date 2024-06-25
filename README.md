@@ -9,5 +9,6 @@ These are some tools I made for GD Colon's [$30 Website](https://thirtydollar.we
 
 ## Commands
 - `reassign` \<inputFilePath\> [\<outputFilePath\>]
+  - this will then ask for original sound, an optional new sound, and an optional transposition
 - `mousebot` \<dataFilePath\> [\<useKeybinds\>] [\<useMacros\>]
 - `combine` \<file1\> \<file2\> [\<file3\>...]
