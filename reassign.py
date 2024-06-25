@@ -37,6 +37,7 @@ def reassign(inputFilePath, outputFilePath = "output.🗿"):
             
             if sound == "!divider":
                 f.write("|!divider\n")
+                continue
 
             components = sound.split("@")
 
