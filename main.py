@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
         f = open(args[1])
         data = json.load(f)
-        f.close
+        f.close()
 
         controller = Controller()
 
