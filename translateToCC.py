@@ -4,7 +4,7 @@ preamble = """
 local speaker = peripheral.wrap("top")
 
 local function playSound(instrumentIndex, note, delay)
-    speaker.playNote(instruments[instrumentIndex], note)
+    speaker.playNote(instruments[instrumentIndex], 1, note)
     if delay > 0 then
         os.sleep(delay)
     end
