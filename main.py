@@ -3,8 +3,9 @@ import json
 import pyautogui
 from pynput.keyboard import Controller, Listener
 from reassign import reassign
-from combine import combine
 import mouseBot
+from combine import combine
+from translateToCC import translate
 
 def on_press(key):
     mouseBot.on_press(
@@ -19,37 +20,52 @@ if __name__ == "__main__":
     args = sys.argv[1:]
 
     if len(args) == 0:
-        raise Exception("No arguments provided")
+        raise TypeError("No arguments provided")
+    
+    command = args[0].lower()
 
-    if args[0].lower() == "reassign":
-        if len(args) == 1:
-            raise Exception("Input file path argument not provided")
-        if len(args) == 2:
-            reassign(args[1])
-        else:
-            reassign(args[1], args[2])
-    elif args[0].lower() == "mousebot":
-        if len(args) == 1:
-            raise Exception("Data json file path argument not provided")
+    args = args[1:]
 
-        f = open(args[1])
-        data = json.load(f)
-        f.close()
+    match command.lower():
+        case "reassign":
+            if len(args) == 0:
+                raise TypeError("Usage: reassign <inputFilePath> [<outputFilePath>]")
+            elif len(args) == 1:
+                reassign(args[0])
+            else:
+                reassign(args[0], args[1])
+        case "mousebot":
+            if len(args) == 0:
+                raise TypeError("Usage: mousebot <dataFilePath> [<useKeybinds>] [<useMacros>]")
 
-        controller = Controller()
+            with open(args[0]) as f:
+                data = json.load(f)
 
-        useKeybinds = args[2].lower() == "true" if len(args) > 2 else True
-        useMacros   = args[3].lower() == "true" if len(args) > 3 else True
+            controller = Controller()
 
-        pyautogui.FAILSAFE = False
+            useKeybinds = args[1].lower() == "true" if len(args) > 1 else True
+            useMacros   = args[2].lower() == "true" if len(args) > 2 else True
 
-        with Listener(
-                on_press=on_press,
-                on_release=mouseBot.on_release) as listener:
-            listener.join()
-    elif args[0].lower() == "combine":
-        if len(args) < 2:
-            raise Exception("Input file path argumnts not provided")
-        combine(args[1:])
-    else:
-        raise Exception("Tool not selected")
+            pyautogui.FAILSAFE = False
+
+            with Listener(
+                    on_press=on_press,
+                    on_release=mouseBot.on_release) as listener:
+                listener.join()
+        case "combine":
+            if len(args) < 1:
+                raise TypeError("Usage: combine <file1> <file2> [<file3>...]")
+            combine(args)
+        case "translatetocc":
+            if len(args) < 2:
+                raise TypeError("Usage: translateToCC <dataFilePath> <inputFilePath> [<outputFilePath>]")
+
+            with open(args[0]) as f:
+                data = json.load(f)
+
+            if len(args) == 2:
+                translate(data, args[1])
+            else:
+                translate(data, args[1], args[2])
+        case _:
+            raise TypeError("Command not selected")

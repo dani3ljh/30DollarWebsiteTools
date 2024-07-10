@@ -1,7 +1,7 @@
 from pynput.keyboard import Key, Controller
 import pyautogui
 
-def on_press(key: Key, data: dict, controller: Controller, useKeybinds = True, useMacros = True):
+def on_press(key: Key, data: dict[str, str | int | dict], controller: Controller, useKeybinds: bool, useMacros: bool):
     if key == Key.left:
         posX = pyautogui.position()[0]
         if posX > data["minX"] and posX > data["maxX"]:

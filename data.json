@@ -16,5 +16,6 @@
     "columns": 10,
     "tempoAdd": { "x": 355, "y": 695 },
     "tempoSetTo": { "x": 470, "y": 695 },
-    "tempoMultiply": { "x": 600, "y": 695 }
+    "tempoMultiply": { "x": 600, "y": 695 },
+    "notesToCC": { "noteblock_harp": "harp", "noteblock_bass": "bass" }
 }

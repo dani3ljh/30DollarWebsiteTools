@@ -1,6 +1,14 @@
 from os import path
 
-def reassign(inputFilePath, outputFilePath = "output.🗿"):
+def combineComponents(components: list[str]) -> str:
+    resSound = "|"
+
+    for component in components:
+        resSound += component + "@"
+
+    return resSound[:-1] #remove last @
+
+def reassign(inputFilePath: str, outputFilePath = "output.🗿"):
     if not path.isfile(inputFilePath):
         raise Exception("input file path isn't a file")
     
@@ -20,15 +28,6 @@ def reassign(inputFilePath, outputFilePath = "output.🗿"):
     print(f"Reassigning {originalSound} to {newSound} with a transposition of {transposition} to file {outputFilePath}")
 
     with open(outputFilePath, "w") as f:
-        def writeComponents(components):
-            resSound = "|"
-
-            for component in components:
-                resSound += component
-                resSound += "@"
-
-            f.write(resSound[:-1]) #remove last @
-        
         for sound in sounds:
             sound = sound.strip()
 
@@ -42,13 +41,13 @@ def reassign(inputFilePath, outputFilePath = "output.🗿"):
             components = sound.split("@")
 
             if components[0] != originalSound:
-                writeComponents(components)
+                f.write(combineComponents(components))
                 continue
 
             components[0] = newSound
 
             if transposition == 0:
-                writeComponents(components)
+                f.write(combineComponents(components))
                 continue
 
             if len(components) == 1:
@@ -60,5 +59,6 @@ def reassign(inputFilePath, outputFilePath = "output.🗿"):
             if newAmount == 0:
                 components.pop() # remove the @0
             
-            writeComponents(components)
+            f.write(combineComponents(components))
+
     print("Done")
