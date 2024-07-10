@@ -16,6 +16,6 @@ These are some tools I made for GD Colon's [$30 Website](https://thirtydollar.we
 - `translateToCC` \<dataFilePath\> \<inputFilePath\> [\<outputFilePath\>]
   - translates $30 Website code to a computerCraft file that plays it on a speaker
   - wip only can handle tempo(set, add, mult), pause, and silence
-  - to send to computerCraft put output into pastebin then run `pastebin get <pastebinCode> <newFileName>`
+  - to send to computerCraft put output into [pastebin](https://pastebin.com) then run `pastebin get <pastebinCode> <newFileName>` in your computer with a [speaker](https://tweaked.cc/peripheral/speaker.html) atop it
   - edit the dataFile to add notes by adding a key in the dict `notesToCC` from the $30 Website sound to the minecraft noteblock sound
   - default outputFilePath is `output.lua`
