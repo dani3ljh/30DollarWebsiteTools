@@ -1,3 +1,4 @@
+import sys
 from os import path
 
 def combineComponents(components: list[str]) -> str:
@@ -62,3 +63,13 @@ def reassign(inputFilePath: str, outputFilePath = "output.🗿"):
             f.write(combineComponents(components))
 
     print("Done")
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+
+    if len(args) == 0:
+        raise TypeError("Usage: reassign <inputFilePath> [<outputFilePath>]")
+    elif len(args) == 1:
+        reassign(args[0])
+    else:
+        reassign(args[0], args[1])

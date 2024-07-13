@@ -17,5 +17,8 @@
     "tempoAdd": { "x": 355, "y": 695 },
     "tempoSetTo": { "x": 470, "y": 695 },
     "tempoMultiply": { "x": 600, "y": 695 },
-    "notesToCC": { "noteblock_harp": "harp", "noteblock_bass": "bass" }
+    "notesToCC": [
+        { "30DollarWebsiteSound": "noteblock_harp", "newSound": "harp", "type": "note" },
+        { "30DollarWebsiteSound": "noteblock_bass", "newSound": "bass", "type": "note" }
+    ]
 }

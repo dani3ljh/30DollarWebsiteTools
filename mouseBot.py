@@ -1,7 +1,9 @@
-from pynput.keyboard import Key, Controller
+import sys
+import json
+from pynput.keyboard import Key, Controller, Listener
 import pyautogui
 
-def on_press(key: Key, data: dict[str, str | int | dict], controller: Controller, useKeybinds: bool, useMacros: bool):
+def onPress(key: Key, data: dict[str, str | int | dict | list], controller: Controller, useKeybinds: bool, useMacros: bool):
     if key == Key.left:
         posX = pyautogui.position()[0]
         if posX > data["minX"] and posX > data["maxX"]:
@@ -62,7 +64,28 @@ def on_press(key: Key, data: dict[str, str | int | dict], controller: Controller
         pyautogui.click()
         pyautogui.moveTo(originalPos)
     
-def on_release(key):
+def onRelease(key):
     if key == Key.esc or key == Key.delete:
         print(f"{key} pressed, exiting")
         return False # stop listener
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+
+    if len(args) == 0:
+        raise TypeError("Usage: mousebot <dataFilePath> [<useKeybinds>] [<useMacros>]")
+
+    with open(args[0]) as f:
+        data = json.load(f)
+
+    controller = Controller()
+
+    useKeybinds = args[1].lower() == "true" if len(args) > 1 else True
+    useMacros   = args[2].lower() == "true" if len(args) > 2 else True
+
+    pyautogui.FAILSAFE = False
+
+    with Listener(
+            on_press=lambda key: onPress(key, data, controller, useKeybinds, useMacros),
+            on_release=onRelease) as listener:
+        listener.join()

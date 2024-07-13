@@ -3,18 +3,9 @@ import json
 import pyautogui
 from pynput.keyboard import Controller, Listener
 from reassign import reassign
-import mouseBot
+from mouseBot import onPress, onRelease
 from combine import combine
-from translateToCC import translate
-
-def on_press(key):
-    mouseBot.on_press(
-        key,
-        data,
-        controller,
-        useKeybinds,
-        useMacros
-    )
+from translateToCC import translateToCC
 
 if __name__ == "__main__":
     args = sys.argv[1:]
@@ -49,12 +40,13 @@ if __name__ == "__main__":
             pyautogui.FAILSAFE = False
 
             with Listener(
-                    on_press=on_press,
-                    on_release=mouseBot.on_release) as listener:
+                    on_press=lambda key: onPress(key, data, controller, useKeybinds, useMacros),
+                    on_release=onRelease) as listener:
                 listener.join()
         case "combine":
             if len(args) < 1:
                 raise TypeError("Usage: combine <file1> <file2> [<file3>...]")
+            
             combine(args)
         case "translatetocc":
             if len(args) < 2:
@@ -64,8 +56,8 @@ if __name__ == "__main__":
                 data = json.load(f)
 
             if len(args) == 2:
-                translate(data, args[1])
+                translateToCC(data, args[1])
             else:
-                translate(data, args[1], args[2])
+                translateToCC(data, args[1], args[2])
         case _:
             raise TypeError("Command not selected")
