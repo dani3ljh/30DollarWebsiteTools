@@ -16,7 +16,8 @@ These are some tools I made for GD Colon's [$30 Website](https://thirtydollar.we
 - `combine` \<file1\> \<file2\> [\<file3\>...]
 - `translateToCC` \<dataFilePath\> \<inputFilePath\> [\<outputFilePath\>]
   - translates $30 Website code to a computerCraft file that plays it on a speaker
-  - wip only can handle tempo(set, add, mult), pause, and silence, in mc can play either a noteblock sound or a mc audio file
+  - wip only can handle tempo(set, add, mult), pause, silence, and loops(havent tested nor expect nested loops to work)
+  - in mc can play either a noteblock sound or a mc audio file
   - to send to computerCraft put output into [pastebin](https://pastebin.com) then run `pastebin get <pastebinCode> <newFileName>` in your computer with a [speaker](https://tweaked.cc/peripheral/speaker.html) atop it
   - edit the dataFile to add notes by adding a dict in the list `notesToCC`
   - default outputFilePath is `output.lua`

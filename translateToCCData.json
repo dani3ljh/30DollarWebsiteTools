@@ -1,0 +1,6 @@
+{
+    "notesToCC": [
+        { "30DollarWebsiteSound": "noteblock_harp", "newSound": "harp", "type": "note" },
+        { "30DollarWebsiteSound": "noteblock_bass", "newSound": "bass", "type": "note" }
+    ]
+}
